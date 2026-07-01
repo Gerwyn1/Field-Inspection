@@ -1,0 +1,21 @@
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Editor / IDE (root level) ---
+.idea/
+.vscode/
+*.iml
+
+# --- Java build output (backend/.gitignore also covers this) ---
+target/
+build/
+
+# --- Secrets / local env ---
+.env
+*.local.env
+application-local.properties
+
+# --- Flutter (added later in Phase 2) ---
+mobile/build/
+mobile/.dart_tool/
