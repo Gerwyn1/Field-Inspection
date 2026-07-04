@@ -1,5 +1,7 @@
 package com.fieldinspect.backend.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,14 +37,23 @@ public class AppUser {
 
     private String role; // TECHNICIAN, SUPERVISOR
 
+    /**
+     * The BCrypt HASH of the password — never the plain text.
+     * @JsonIgnore -> Jackson skips this field when serializing to JSON, so no API
+     * response can ever leak it (not even the hash).
+     */
+    @JsonIgnore
+    private String password;
+
     /** No-arg constructor required by JPA. */
     protected AppUser() {
     }
 
-    public AppUser(String fullName, String email, String role) {
+    public AppUser(String fullName, String email, String role, String password) {
         this.fullName = fullName;
         this.email = email;
         this.role = role;
+        this.password = password;
     }
 
     public Long getId() {
@@ -71,5 +82,13 @@ public class AppUser {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

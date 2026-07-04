@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.fieldinspect.backend.asset.Asset;
@@ -31,13 +32,16 @@ public class DataSeeder implements CommandLineRunner {
     private final AppUserRepository users;
     private final InspectionRepository inspections;
     private final ReadingRepository readings;
+    private final PasswordEncoder passwordEncoder;
 
     public DataSeeder(AssetRepository assets, AppUserRepository users,
-            InspectionRepository inspections, ReadingRepository readings) {
+            InspectionRepository inspections, ReadingRepository readings,
+            PasswordEncoder passwordEncoder) {
         this.assets = assets;
         this.users = users;
         this.inspections = inspections;
         this.readings = readings;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -48,9 +52,11 @@ public class DataSeeder implements CommandLineRunner {
 
         Instant now = Instant.now();
 
-        // --- Users ---
-        AppUser alan = users.save(new AppUser("Alan Tan", "alan@fieldinspect.com", "TECHNICIAN"));
-        AppUser siti = users.save(new AppUser("Siti Rahman", "siti@fieldinspect.com", "SUPERVISOR"));
+        // --- Users (demo password for both: "password123", stored as a BCrypt hash) ---
+        AppUser alan = users.save(new AppUser("Alan Tan", "alan@fieldinspect.com", "TECHNICIAN",
+                passwordEncoder.encode("password123")));
+        AppUser siti = users.save(new AppUser("Siti Rahman", "siti@fieldinspect.com", "SUPERVISOR",
+                passwordEncoder.encode("password123")));
 
         // --- Assets (same five as before, now kept in variables so inspections can link to them) ---
         Asset hvac = assets.save(new Asset("Rooftop HVAC Unit A", "HVAC", "Block A - Rooftop", "OK",
