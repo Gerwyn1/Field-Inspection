@@ -3,6 +3,7 @@ package com.fieldinspect.backend.auth;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * SecurityFilterChain bean REPLACES that default with our rules.
  */
 @Configuration
+@EnableMethodSecurity // turns on @PreAuthorize checks on individual methods
 public class SecurityConfig {
 
     /** BCrypt hasher (like bcryptjs). encode() to hash, matches() to check. */
