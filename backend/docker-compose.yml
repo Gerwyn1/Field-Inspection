@@ -1,0 +1,26 @@
+# Dev infrastructure for the backend: Microsoft SQL Server in a container.
+#
+#   docker compose up -d      -> start it (detached); first run downloads the image
+#   docker compose down       -> stop it (data survives in the volume)
+#   docker compose down -v    -> stop it AND wipe the data volume
+#
+# The named volume "mssql-data" is what makes the database persistent: the
+# container is disposable, the volume is not.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: fieldinspect-mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      # SQL Server enforces password complexity (8+ chars, 3 of 4 character
+      # classes) — a weak password makes the container exit at startup.
+      # Dev-only credential; in production this comes from a secrets store.
+      MSSQL_SA_PASSWORD: "FieldInspect!2026"
+      MSSQL_PID: "Developer" # free edition for development use
+    ports:
+      - "1433:1433" # SQL Server's standard port, exposed to localhost
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+volumes:
+  mssql-data:
