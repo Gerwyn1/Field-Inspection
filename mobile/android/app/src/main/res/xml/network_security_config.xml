@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 9+ blocks plain http:// traffic by default (rightly so).
+  Instead of switching it off globally, we allow cleartext ONLY to
+  10.0.2.2 - the emulator's alias for the development PC where Spring
+  Boot runs. Production traffic would be https and unaffected by this.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>
