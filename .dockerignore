@@ -1,0 +1,11 @@
+# Keep the Docker build context small: build outputs and tooling caches are
+# rebuilt inside the image anyway, and .git can be huge.
+.git
+**/target
+**/build
+**/.dart_tool
+**/.gradle
+**/.idea
+mobile/android
+mobile/ios
+mobile/integration_test

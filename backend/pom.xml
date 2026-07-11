@@ -79,11 +79,14 @@
 			<artifactId>mssql-jdbc</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- H2 is now TEST-scoped: the integration tests run on it (fast, no Docker needed). -->
+		<!-- H2 serves two jobs: the integration tests (fast, no Docker needed) AND
+		     the "demo" profile used by the deployed Hugging Face Space, where SQL
+		     Server isn't available. runtime scope = packaged into the jar and
+		     visible to tests, but our own code still can't compile against it. -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

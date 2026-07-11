@@ -19,3 +19,7 @@ application-local.properties
 # --- Flutter (added later in Phase 2) ---
 mobile/build/
 mobile/.dart_tool/
+
+# --- Generated: Flutter web bundle copied in for local demo verification.
+# The Space's Docker build recreates this from source; never commit it. ---
+backend/src/main/resources/static/

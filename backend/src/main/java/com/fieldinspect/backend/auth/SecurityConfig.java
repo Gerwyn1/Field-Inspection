@@ -54,7 +54,13 @@ public class SecurityConfig {
                         // public endpoint (e.g. a 400 validation failure on login)
                         // gets swallowed and resurfaces as a misleading 401.
                         .requestMatchers("/error").permitAll()
-                        .anyRequest().authenticated())                           // EVERYTHING else needs a token
+                        .requestMatchers("/api/**").authenticated()              // every OTHER api route needs a token
+                        // Everything that isn't /api/** is a static file of the
+                        // Flutter web build (index.html, main.dart.js, ...) that
+                        // Spring serves from the jar's /static folder. The SPA
+                        // must load before anyone can log in, so it stays open —
+                        // the DATA is what the JWT protects, not the JS bundle.
+                        .anyRequest().permitAll())
 
                 // When an unauthenticated request hits a protected route, answer
                 // plain 401 (default would be 403 — wrong semantics: 401 = "who are

@@ -1,4 +1,20 @@
+---
+title: FieldInspect
+emoji: 🔧
+colorFrom: green
+colorTo: gray
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # FieldInspect
+
+> **Live demo** (Hugging Face Space): log in with `alan@fieldinspect.com` / `password123`
+> (technician) or `siti@fieldinspect.com` / `password123` (supervisor). The demo runs the
+> Flutter client as a web build against the same Spring Boot API, on an in-memory H2
+> database that reseeds on every restart. Local development uses SQL Server and the
+> native Android app.
 
 FieldInspect is a full-stack field inspection management application that allows technicians to perform on-site asset inspections while enabling administrators to manage assets, users, and inspection records.
 
@@ -66,11 +82,13 @@ Each reading stores:
 
 ### Database
 
-* PostgreSQL
+* Microsoft SQL Server 2022 (Docker) for development
+* H2 in-memory for tests and the hosted demo
 
 ### Client
 
-* Mobile application (REST API consumer)
+* Flutter mobile application (Android), also compiled to web for the hosted demo
+* Provider state management, JWT session persisted in encrypted secure storage
 
 ---
 
